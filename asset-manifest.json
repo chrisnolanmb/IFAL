@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/IFAL/static/css/main.d221dc40.css",
-    "main.js": "/IFAL/static/js/main.04412297.js",
+    "main.js": "/IFAL/static/js/main.7dd6e033.js",
     "index.html": "/IFAL/index.html",
     "main.d221dc40.css.map": "/IFAL/static/css/main.d221dc40.css.map",
-    "main.04412297.js.map": "/IFAL/static/js/main.04412297.js.map"
+    "main.7dd6e033.js.map": "/IFAL/static/js/main.7dd6e033.js.map"
   },
   "entrypoints": [
     "static/css/main.d221dc40.css",
-    "static/js/main.04412297.js"
+    "static/js/main.7dd6e033.js"
   ]
 }
