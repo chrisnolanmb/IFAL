@@ -21,7 +21,7 @@ jobs:
         run: npm install recharts
 
       - name: Install cards
-        run: react-bootstrap bootstrap
+        run: npm install react-bootstrap bootstrap
 
       - name: Install dependencies
 
