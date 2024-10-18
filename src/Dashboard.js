@@ -9,14 +9,19 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+// import { Card, CardHeader, CardContent } from "@/components/ui/card";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
+
+import { Card, Form } from "react-bootstrap";
+
+// Asegúrate de importar los estilos de Bootstrap
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const fullData = {
   Secundaria: {
@@ -246,28 +251,24 @@ const Dashboard = () => {
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardHeader>
-        <h2 className="text-2xl font-bold">
-          Análisis de Inscripciones y Proyecciones
-        </h2>
-        <Select
-          onValueChange={setSelectedSection}
-          defaultValue={selectedSection}
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Selecciona una sección" />
-          </SelectTrigger>
-          <SelectContent>
+    <Card className="w-100 mx-auto" style={{ maxWidth: "800px" }}>
+      <Card.Header>
+        <h2 className="mb-0">Análisis de Inscripciones y Proyecciones</h2>
+      </Card.Header>
+      <Card.Body>
+        <Form.Group className="mb-3">
+          <Form.Label>Selecciona una sección</Form.Label>
+          <Form.Select
+            value={selectedSection}
+            onChange={(e) => setSelectedSection(e.target.value)}
+          >
             {Object.keys(fullData).map((section) => (
-              <SelectItem key={section} value={section}>
+              <option key={section} value={section}>
                 {section}
-              </SelectItem>
+              </option>
             ))}
-          </SelectContent>
-        </Select>
-      </CardHeader>
-      <CardContent>
+          </Form.Select>
+        </Form.Group>
         <ResponsiveContainer width="100%" height={400}>
           <LineChart
             data={formatData()}
@@ -289,7 +290,7 @@ const Dashboard = () => {
             ))}
           </LineChart>
         </ResponsiveContainer>
-      </CardContent>
+      </Card.Body>
     </Card>
   );
 };

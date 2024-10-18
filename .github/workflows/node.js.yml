@@ -21,7 +21,7 @@ jobs:
         run: npm install recharts
 
       - name: Install cards
-        run: npm install shadcn-ui
+        run: react-bootstrap bootstrap
 
       - name: Install dependencies
 
