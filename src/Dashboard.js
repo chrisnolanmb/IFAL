@@ -203,12 +203,12 @@ const years = [
 ];
 
 const colors = [
-  "#8884d8",
-  "#82ca9d",
-  "#ffc658",
-  "#ff7300",
-  "#a4de6c",
-  "#d0ed57",
+  "#1f77b4", // azul
+  "#ff7f0e", // naranja
+  "#2ca02c", // verde
+  "#d62728", // rojo
+  "#9467bd", // morado
+  "#8c564b", // marrón
 ];
 
 // Función para calcular la regresión lineal
@@ -260,10 +260,13 @@ const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="custom-tooltip bg-white p-4 border border-gray-300 rounded shadow-lg">
-        <p className="label font-bold">{`Año: ${label}`}</p>
+      <div className="custom-tooltip bg-white p-3 border border-gray-300 rounded shadow-lg">
+        <p className="label font-weight-bold">{`Año: ${label}`}</p>
         {payload.map((entry, index) => (
-          <p key={`item-${index}`} style={{ color: entry.color }}>
+          <p
+            key={`item-${index}`}
+            style={{ color: entry.color, margin: "0.25rem 0" }}
+          >
             {`${entry.name}: Nuevos = ${entry.value}, Reinscritos = ${
               data[`${entry.name}Reinscritos`] || "N/A"
             }, Total = ${data[`${entry.name}Total`] || "N/A"}`}
@@ -303,12 +306,14 @@ const Dashboard = () => {
   };
 
   return (
-    <Card className="w-100 mx-auto" style={{ maxWidth: "800px" }}>
+    <Card className="w-100 mx-auto" style={{ maxWidth: "1000px" }}>
+      {" "}
+      {/* Aumentado el ancho máximo */}
       <Card.Header>
         <h2 className="mb-0">Análisis de Inscripciones y Proyecciones</h2>
       </Card.Header>
       <Card.Body>
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-4">
           <Form.Label>Selecciona una sección</Form.Label>
           <Form.Select
             value={selectedSection}
@@ -321,23 +326,34 @@ const Dashboard = () => {
             ))}
           </Form.Select>
         </Form.Group>
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="100%" height={500}>
+          {" "}
+          {/* Aumentado la altura */}
           <LineChart
             data={formatData()}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
+            <XAxis
+              dataKey="name"
+              padding={{ left: 30, right: 30 }}
+              tick={{ fill: "#666", fontSize: 12 }}
+            />
+            <YAxis
+              tick={{ fill: "#666", fontSize: 12 }}
+              tickFormatter={(value) => value.toLocaleString()}
+            />
             <Tooltip content={<CustomTooltip />} />
-            <Legend />
+            <Legend wrapperStyle={{ paddingTop: "20px" }} />
             {Object.keys(fullData[selectedSection]).map((group, index) => (
               <Line
                 key={group}
                 type="monotone"
                 dataKey={group}
                 stroke={colors[index % colors.length]}
-                activeDot={{ r: 8 }}
+                strokeWidth={3} // Aumentado el grosor de la línea
+                dot={{ r: 6, strokeWidth: 2 }} // Puntos más grandes
+                activeDot={{ r: 8, strokeWidth: 2 }} // Puntos activos aún más grandes
               />
             ))}
           </LineChart>
