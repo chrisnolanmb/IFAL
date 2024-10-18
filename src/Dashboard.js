@@ -563,7 +563,10 @@ const Dashboard = () => {
   return (
     <Card className="w-100 mx-auto" style={{ maxWidth: "1000px" }}>
       <Card.Header>
-        <h2 className="mb-0">Análisis de Inscripciones y Proyecciones</h2>
+        <h2 className="mb-0">
+          Análisis de datos para proyecciones de los próximos 5 años de
+          inscripciones de alumnos
+        </h2>
       </Card.Header>
       <Card.Body>
         <Form.Group className="mb-3">
@@ -581,8 +584,8 @@ const Dashboard = () => {
               );
             }}
           >
-            <option value="Institution1">Institución 1</option>
-            <option value="Institution2">Institución 2</option>
+            <option value="Institution1">IFAL Centro</option>
+            <option value="Institution2">IFAL Itzícuaro</option>
           </Form.Select>
         </Form.Group>
         <Form.Group className="mb-4">
