@@ -24,7 +24,7 @@ function App() {
         <Dashboard />
       </main>
       <footer className="bg-gray-200 mt-8 p-4 text-center text-gray-600">
-        <p>© 2024 Tu Institución Educativa. Todos los derechos reservados.</p>
+        <p>© 2024 by Christopher Nolan M.B.</p>
       </footer>
     </div>
   );
