@@ -1,31 +1,31 @@
-name: Deploy React app to GitHub Pages
+name: Deploy React App to GitHub Pages
 
 on:
   push:
     branches:
-      - main # O la rama que prefieras para activar el despliegue
+      - main # El despliegue se activará en cada push a main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out the code
+      - name: Checkout the code
         uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18" # Asegúrate de usar la misma versión que tu proyecto
+          node-version: "18" # Asegúrate de usar la versión de Node.js que requiere tu proyecto
 
       - name: Install dependencies
         run: npm install
 
       - name: Build the React app
-        run: npm run build
+        run: npm run build # Construye tu aplicación React
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./build # El directorio donde npm genera la versión construida
