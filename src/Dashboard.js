@@ -503,29 +503,47 @@ const Dashboard = () => {
     setCalculatedProjections(projections);
   }, [selectedInstitution]);
 
+  //   const formatData = () => {
+  //     const fullData =
+  //       selectedInstitution === "Institution1"
+  //         ? fullDataInstitution1
+  //         : fullDataInstitution2;
+  //     return years.map((year, index) => {
+  //       const dataPoint = { name: year };
+  //       Object.keys(fullData[selectedSection]).forEach((group) => {
+  //         if (index < 5) {
+  //           const yearData = fullData[selectedSection][group][index];
+  //           if (yearData) {
+  //             dataPoint[group] = yearData.nuevos;
+  //             dataPoint[`${group}Reinscritos`] = yearData.reinscritos;
+  //             dataPoint[`${group}Total`] = yearData.total;
+  //           }
+  //         } else {
+  //           const projectedData =
+  //             calculatedProjections[selectedSection]?.[group]?.[index - 5];
+  //           if (projectedData) {
+  //             dataPoint[group] = projectedData.nuevos;
+  //             dataPoint[`${group}Reinscritos`] = projectedData.reinscritos;
+  //             dataPoint[`${group}Total`] = projectedData.total;
+  //           }
+  //         }
+  //       });
+  //       return dataPoint;
+  //     });
+  //   };
+
   const formatData = () => {
-    const fullData =
-      selectedInstitution === "Institution1"
-        ? fullDataInstitution1
-        : fullDataInstitution2;
     return years.map((year, index) => {
       const dataPoint = { name: year };
       Object.keys(fullData[selectedSection]).forEach((group) => {
         if (index < 5) {
           const yearData = fullData[selectedSection][group][index];
-          if (yearData) {
-            dataPoint[group] = yearData.nuevos;
-            dataPoint[`${group}Reinscritos`] = yearData.reinscritos;
-            dataPoint[`${group}Total`] = yearData.total;
-          }
+          dataPoint[group] = yearData.nuevos;
+          dataPoint[`${group}Reinscritos`] = yearData.reinscritos;
+          dataPoint[`${group}Total`] = yearData.total;
         } else {
-          const projectedData =
-            calculatedProjections[selectedSection]?.[group]?.[index - 5];
-          if (projectedData) {
-            dataPoint[group] = projectedData.nuevos;
-            dataPoint[`${group}Reinscritos`] = projectedData.reinscritos;
-            dataPoint[`${group}Total`] = projectedData.total;
-          }
+          dataPoint[group] =
+            calculatedProjections[selectedSection]?.[group]?.[index - 5] || 0;
         }
       });
       return dataPoint;
