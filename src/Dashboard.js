@@ -211,6 +211,51 @@ const colors = [
   "#d0ed57",
 ];
 
+// Función para calcular la regresión lineal
+const calculateLinearRegression = (data) => {
+  const n = data.length;
+  let sumX = 0,
+    sumY = 0,
+    sumXY = 0,
+    sumX2 = 0;
+
+  for (let i = 0; i < n; i++) {
+    sumX += i;
+    sumY += data[i].nuevos;
+    sumXY += i * data[i].nuevos;
+    sumX2 += i * i;
+  }
+
+  const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+  const intercept = (sumY - slope * sumX) / n;
+
+  return { slope, intercept };
+};
+
+// Función para calcular las proyecciones
+const calculateProjections = (historicalData, yearsToProject = 5) => {
+  const projections = {};
+
+  Object.keys(historicalData).forEach((section) => {
+    projections[section] = {};
+    Object.keys(historicalData[section]).forEach((group) => {
+      const data = historicalData[section][group];
+      const { slope, intercept } = calculateLinearRegression(data);
+
+      projections[section][group] = Array(yearsToProject)
+        .fill()
+        .map((_, i) => {
+          const projectedValue = Math.round(
+            slope * (data.length + i) + intercept
+          );
+          return Math.max(0, projectedValue); // Aseguramos que no haya valores negativos
+        });
+    });
+  });
+
+  return projections;
+};
+
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
@@ -232,6 +277,12 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const Dashboard = () => {
   const [selectedSection, setSelectedSection] = useState("Secundaria");
+  const [projectedData, setProjectedData] = useState({});
+
+  useEffect(() => {
+    const calculatedProjections = calculateProjections(fullData);
+    setProjectedData(calculatedProjections);
+  }, []);
 
   const formatData = () => {
     return years.map((year, index) => {
@@ -243,7 +294,8 @@ const Dashboard = () => {
           dataPoint[`${group}Reinscritos`] = yearData.reinscritos;
           dataPoint[`${group}Total`] = yearData.total;
         } else {
-          dataPoint[group] = projectedData[selectedSection][group][index - 5];
+          dataPoint[group] =
+            projectedData[selectedSection]?.[group]?.[index - 5] || 0;
         }
       });
       return dataPoint;
@@ -294,5 +346,4 @@ const Dashboard = () => {
     </Card>
   );
 };
-
 export default Dashboard;
