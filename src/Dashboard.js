@@ -1,4 +1,14 @@
 import React, { useState, useEffect } from "react";
+// import {
+//   LineChart,
+//   Line,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   Legend,
+//   ResponsiveContainer,
+// } from "recharts";
 import {
   LineChart,
   Line,
@@ -8,6 +18,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  ReferenceLine,
 } from "recharts";
 // import { Card, CardHeader, CardContent } from "@/components/ui/card";
 // import {
@@ -23,7 +34,121 @@ import { Card, Form } from "react-bootstrap";
 // Asegúrate de importar los estilos de Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const fullData = {
+const fullDataInstitution2 = {
+  Primaria: {
+    "1°": [
+      { year: "2020-2021", reinscritos: 0, nuevos: 16, total: 16 },
+      { year: "2021-2022", reinscritos: 0, nuevos: 21, total: 21 },
+      { year: "2022-2023", reinscritos: 0, nuevos: 22, total: 22 },
+      { year: "2023-2024", reinscritos: 0, nuevos: 16, total: 16 },
+      { year: "2024-2025", reinscritos: 0, nuevos: 17, total: 17 },
+    ],
+    "2°": [
+      { year: "2020-2021", reinscritos: 26, nuevos: 0, total: 26 },
+      { year: "2021-2022", reinscritos: 8, nuevos: 9, total: 17 },
+      { year: "2022-2023", reinscritos: 17, nuevos: 6, total: 23 },
+      { year: "2023-2024", reinscritos: 17, nuevos: 1, total: 18 },
+      { year: "2024-2025", reinscritos: 13, nuevos: 2, total: 15 },
+    ],
+    "3°": [
+      { year: "2020-2021", reinscritos: 17, nuevos: 4, total: 21 },
+      { year: "2021-2022", reinscritos: 16, nuevos: 3, total: 19 },
+      { year: "2022-2023", reinscritos: 15, nuevos: 6, total: 21 },
+      { year: "2023-2024", reinscritos: 21, nuevos: 2, total: 23 },
+      { year: "2024-2025", reinscritos: 12, nuevos: 2, total: 14 },
+    ],
+    "4°": [
+      { year: "2020-2021", reinscritos: 9, nuevos: 2, total: 11 },
+      { year: "2021-2022", reinscritos: 15, nuevos: 5, total: 20 },
+      { year: "2022-2023", reinscritos: 15, nuevos: 4, total: 19 },
+      { year: "2023-2024", reinscritos: 18, nuevos: 3, total: 21 },
+      { year: "2024-2025", reinscritos: 16, nuevos: 2, total: 18 },
+    ],
+    "5°": [
+      { year: "2020-2021", reinscritos: 11, nuevos: 3, total: 14 },
+      { year: "2021-2022", reinscritos: 11, nuevos: 2, total: 13 },
+      { year: "2022-2023", reinscritos: 15, nuevos: 5, total: 20 },
+      { year: "2023-2024", reinscritos: 15, nuevos: 8, total: 23 },
+      { year: "2024-2025", reinscritos: 18, nuevos: 0, total: 18 },
+    ],
+    "6°": [
+      { year: "2020-2021", reinscritos: 10, nuevos: 4, total: 14 },
+      { year: "2021-2022", reinscritos: 9, nuevos: 4, total: 13 },
+      { year: "2022-2023", reinscritos: 12, nuevos: 5, total: 17 },
+      { year: "2023-2024", reinscritos: 16, nuevos: 3, total: 19 },
+      { year: "2024-2025", reinscritos: 18, nuevos: 0, total: 18 },
+    ],
+  },
+  Secundaria: {
+    S1: [
+      { year: "2020-2021", reinscritos: 8, nuevos: 18, total: 26 },
+      { year: "2021-2022", reinscritos: 10, nuevos: 10, total: 20 },
+      { year: "2022-2023", reinscritos: 7, nuevos: 18, total: 25 },
+      { year: "2023-2024", reinscritos: 9, nuevos: 11, total: 20 },
+      { year: "2024-2025", reinscritos: 10, nuevos: 11, total: 21 },
+    ],
+    S2: [
+      { year: "2020-2021", reinscritos: 19, nuevos: 0, total: 19 },
+      { year: "2021-2022", reinscritos: 19, nuevos: 3, total: 22 },
+      { year: "2022-2023", reinscritos: 17, nuevos: 7, total: 24 },
+      { year: "2023-2024", reinscritos: 18, nuevos: 6, total: 24 },
+      { year: "2024-2025", reinscritos: 15, nuevos: 3, total: 18 },
+    ],
+    S3: [
+      { year: "2020-2021", reinscritos: 6, nuevos: 2, total: 8 },
+      { year: "2021-2022", reinscritos: 16, nuevos: 4, total: 20 },
+      { year: "2022-2023", reinscritos: 21, nuevos: 3, total: 24 },
+      { year: "2023-2024", reinscritos: 21, nuevos: 0, total: 21 },
+      { year: "2024-2025", reinscritos: 18, nuevos: 0, total: 18 },
+    ],
+  },
+  Bachillerato: {
+    B1: [
+      { year: "2020-2021", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2021-2022", reinscritos: 3, nuevos: 7, total: 10 },
+      { year: "2022-2023", reinscritos: 11, nuevos: 11, total: 22 },
+      { year: "2023-2024", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2024-2025", reinscritos: 7, nuevos: 12, total: 19 },
+    ],
+    B2: [
+      { year: "2020-2021", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2021-2022", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2022-2023", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2023-2024", reinscritos: 8, nuevos: 5, total: 13 },
+      { year: "2024-2025", reinscritos: 0, nuevos: 0, total: 0 },
+    ],
+    B3: [
+      { year: "2020-2021", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2021-2022", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2022-2023", reinscritos: 0, nuevos: 10, total: 10 },
+      { year: "2023-2024", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2024-2025", reinscritos: 10, nuevos: 1, total: 11 },
+    ],
+    B4: [
+      { year: "2020-2021", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2021-2022", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2022-2023", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2023-2024", reinscritos: 17, nuevos: 0, total: 17 },
+      { year: "2024-2025", reinscritos: 0, nuevos: 0, total: 0 },
+    ],
+    B5: [
+      { year: "2020-2021", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2021-2022", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2022-2023", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2023-2024", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2024-2025", reinscritos: 15, nuevos: 0, total: 16 },
+    ],
+    B6: [
+      { year: "2020-2021", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2021-2022", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2022-2023", reinscritos: 0, nuevos: 0, total: 0 },
+      { year: "2023-2024", reinscritos: 0, nuevos: 10, total: 10 },
+      { year: "2024-2025", reinscritos: 0, nuevos: 0, total: 0 },
+    ],
+  },
+};
+
+const fullDataInstitution1 = {
   Secundaria: {
     S1: [
       { year: "2020-2021", reinscritos: 0, nuevos: 10, total: 10 },
@@ -278,41 +403,170 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
+// const Dashboard = () => {
+//   const [selectedSection, setSelectedSection] = useState("Secundaria");
+//   const [calculatedProjections, setCalculatedProjections] = useState({});
+
+//   useEffect(() => {
+//     const projections = calculateProjections(fullData);
+//     setCalculatedProjections(projections);
+//   }, []);
+
+//   const formatData = () => {
+//     return years.map((year, index) => {
+//       const dataPoint = { name: year };
+//       Object.keys(fullData[selectedSection]).forEach((group) => {
+//         if (index < 5) {
+//           const yearData = fullData[selectedSection][group][index];
+//           dataPoint[group] = yearData.nuevos;
+//           dataPoint[`${group}Reinscritos`] = yearData.reinscritos;
+//           dataPoint[`${group}Total`] = yearData.total;
+//         } else {
+//           dataPoint[group] =
+//             calculatedProjections[selectedSection]?.[group]?.[index - 5] || 0;
+//         }
+//       });
+//       return dataPoint;
+//     });
+//   };
+
+//   return (
+//     <Card className="w-100 mx-auto" style={{ maxWidth: "1000px" }}>
+//       {" "}
+//       {/* Aumentado el ancho máximo */}
+//       <Card.Header>
+//         <h2 className="mb-0">Análisis de Inscripciones y Proyecciones</h2>
+//       </Card.Header>
+//       <Card.Body>
+//         <Form.Group className="mb-4">
+//           <Form.Label>Selecciona una sección</Form.Label>
+//           <Form.Select
+//             value={selectedSection}
+//             onChange={(e) => setSelectedSection(e.target.value)}
+//           >
+//             {Object.keys(fullData).map((section) => (
+//               <option key={section} value={section}>
+//                 {section}
+//               </option>
+//             ))}
+//           </Form.Select>
+//         </Form.Group>
+//         <ResponsiveContainer width="100%" height={500}>
+//           {" "}
+//           {/* Aumentado la altura */}
+//           <LineChart
+//             data={formatData()}
+//             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+//           >
+//             <CartesianGrid strokeDasharray="3 3" />
+//             <XAxis
+//               dataKey="name"
+//               padding={{ left: 30, right: 30 }}
+//               tick={{ fill: "#666", fontSize: 12 }}
+//             />
+//             <YAxis
+//               tick={{ fill: "#666", fontSize: 12 }}
+//               tickFormatter={(value) => value.toLocaleString()}
+//             />
+//             <Tooltip content={<CustomTooltip />} />
+//             <Legend wrapperStyle={{ paddingTop: "20px" }} />
+//             {Object.keys(fullData[selectedSection]).map((group, index) => (
+//               <Line
+//                 key={group}
+//                 type="monotone"
+//                 dataKey={group}
+//                 stroke={colors[index % colors.length]}
+//                 strokeWidth={3} // Aumentado el grosor de la línea
+//                 dot={{ r: 6, strokeWidth: 2 }} // Puntos más grandes
+//                 activeDot={{ r: 8, strokeWidth: 2 }} // Puntos activos aún más grandes
+//               />
+//             ))}
+//           </LineChart>
+//         </ResponsiveContainer>
+//       </Card.Body>
+//     </Card>
+//   );
+// };
+
 const Dashboard = () => {
+  const [selectedInstitution, setSelectedInstitution] =
+    useState("Institution1");
   const [selectedSection, setSelectedSection] = useState("Secundaria");
   const [calculatedProjections, setCalculatedProjections] = useState({});
 
   useEffect(() => {
+    const fullData =
+      selectedInstitution === "Institution1"
+        ? fullDataInstitution1
+        : fullDataInstitution2;
     const projections = calculateProjections(fullData);
     setCalculatedProjections(projections);
-  }, []);
+  }, [selectedInstitution]);
 
   const formatData = () => {
+    const fullData =
+      selectedInstitution === "Institution1"
+        ? fullDataInstitution1
+        : fullDataInstitution2;
     return years.map((year, index) => {
       const dataPoint = { name: year };
       Object.keys(fullData[selectedSection]).forEach((group) => {
         if (index < 5) {
           const yearData = fullData[selectedSection][group][index];
-          dataPoint[group] = yearData.nuevos;
-          dataPoint[`${group}Reinscritos`] = yearData.reinscritos;
-          dataPoint[`${group}Total`] = yearData.total;
+          if (yearData) {
+            dataPoint[group] = yearData.nuevos;
+            dataPoint[`${group}Reinscritos`] = yearData.reinscritos;
+            dataPoint[`${group}Total`] = yearData.total;
+          }
         } else {
-          dataPoint[group] =
-            calculatedProjections[selectedSection]?.[group]?.[index - 5] || 0;
+          const projectedData =
+            calculatedProjections[selectedSection]?.[group]?.[index - 5];
+          if (projectedData) {
+            dataPoint[group] = projectedData.nuevos;
+            dataPoint[`${group}Reinscritos`] = projectedData.reinscritos;
+            dataPoint[`${group}Total`] = projectedData.total;
+          }
         }
       });
       return dataPoint;
     });
   };
 
+  const fullData =
+    selectedInstitution === "Institution1"
+      ? fullDataInstitution1
+      : fullDataInstitution2;
+  const projectionStartIndex = Math.min(
+    ...Object.values(fullData).map((section) =>
+      Math.min(...Object.values(section).map((group) => group.length))
+    )
+  );
+
   return (
     <Card className="w-100 mx-auto" style={{ maxWidth: "1000px" }}>
-      {" "}
-      {/* Aumentado el ancho máximo */}
       <Card.Header>
         <h2 className="mb-0">Análisis de Inscripciones y Proyecciones</h2>
       </Card.Header>
       <Card.Body>
+        <Form.Group className="mb-3">
+          <Form.Label>Selecciona una institución</Form.Label>
+          <Form.Select
+            value={selectedInstitution}
+            onChange={(e) => {
+              setSelectedInstitution(e.target.value);
+              setSelectedSection(
+                Object.keys(
+                  e.target.value === "Institution1"
+                    ? fullDataInstitution1
+                    : fullDataInstitution2
+                )[0]
+              );
+            }}
+          >
+            <option value="Institution1">Institución 1</option>
+            <option value="Institution2">Institución 2</option>
+          </Form.Select>
+        </Form.Group>
         <Form.Group className="mb-4">
           <Form.Label>Selecciona una sección</Form.Label>
           <Form.Select
@@ -327,8 +581,6 @@ const Dashboard = () => {
           </Form.Select>
         </Form.Group>
         <ResponsiveContainer width="100%" height={500}>
-          {" "}
-          {/* Aumentado la altura */}
           <LineChart
             data={formatData()}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
@@ -351,11 +603,22 @@ const Dashboard = () => {
                 type="monotone"
                 dataKey={group}
                 stroke={colors[index % colors.length]}
-                strokeWidth={3} // Aumentado el grosor de la línea
-                dot={{ r: 6, strokeWidth: 2 }} // Puntos más grandes
-                activeDot={{ r: 8, strokeWidth: 2 }} // Puntos activos aún más grandes
+                strokeWidth={3}
+                dot={{ r: 6, strokeWidth: 2 }}
+                activeDot={{ r: 8, strokeWidth: 2 }}
               />
             ))}
+            <ReferenceLine
+              x={years[projectionStartIndex - 1]}
+              stroke="rgba(0, 0, 0, 0.5)"
+              strokeDasharray="3 3"
+              label={{
+                value: "Inicio de Proyecciones",
+                position: "insideTopRight",
+                fill: "#666",
+                fontSize: 12,
+              }}
+            />
           </LineChart>
         </ResponsiveContainer>
       </Card.Body>
