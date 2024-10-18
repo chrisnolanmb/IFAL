@@ -19,6 +19,9 @@ jobs:
           node-version: "18" # Asegúrate de usar la versión de Node.js que requiere tu proyecto
       - name: Install recharts
         run: npm install recharts
+
+      - name: Install cards
+        run: npm install @craco/craco
       - name: Install dependencies
 
         run: npm install
