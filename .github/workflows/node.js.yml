@@ -21,7 +21,7 @@ jobs:
         run: npm install recharts
 
       - name: Install cards
-        run: npx shadcn-ui@latest add card select
+        run: npm install shadcn-ui
 
       - name: Install dependencies
 
