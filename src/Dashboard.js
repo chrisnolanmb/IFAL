@@ -256,59 +256,22 @@ const calculateProjections = (historicalData, yearsToProject = 5) => {
   return projections;
 };
 
-// const CustomTooltip = ({ active, payload, label }) => {
-//   if (active && payload && payload.length) {
-//     const data = payload[0].payload;
-//     return (
-//       <div className="custom-tooltip bg-white p-3 border border-gray-300 rounded shadow-lg">
-//         <p className="label font-weight-bold">{`Año: ${label}`}</p>
-//         {payload.map((entry, index) => (
-//           <p
-//             key={`item-${index}`}
-//             style={{ color: entry.color, margin: "0.25rem 0" }}
-//           >
-//             {`${entry.name}: Nuevos = ${entry.value}, Reinscritos = ${
-//               data[`${entry.name}Reinscritos`] || "N/A"
-//             }, Total = ${data[`${entry.name}Total`] || "N/A"}`}
-//           </p>
-//         ))}
-//       </div>
-//     );
-//   }
-//   return null;
-// };
-
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
       <div className="custom-tooltip bg-white p-3 border border-gray-300 rounded shadow-lg">
         <p className="label font-weight-bold">{`Año: ${label}`}</p>
-        {payload.map((entry, index) => {
-          const nuevos =
-            entry.value !== undefined ? `Nuevos = ${entry.value}` : "";
-          const reinscritos =
-            data[`${entry.name}Reinscritos`] !== undefined
-              ? `Reinscritos = ${data[`${entry.name}Reinscritos`]}`
-              : "";
-          const total =
-            data[`${entry.name}Total`] !== undefined
-              ? `Total = ${data[`${entry.name}Total`]}`
-              : "";
-
-          const values = [nuevos, reinscritos, total]
-            .filter(Boolean)
-            .join(", ");
-
-          return values ? (
-            <p
-              key={`item-${index}`}
-              style={{ color: entry.color, margin: "0.25rem 0" }}
-            >
-              {`${entry.name}: ${values}`}
-            </p>
-          ) : null;
-        })}
+        {payload.map((entry, index) => (
+          <p
+            key={`item-${index}`}
+            style={{ color: entry.color, margin: "0.25rem 0" }}
+          >
+            {`${entry.name}: Nuevos = ${entry.value}, Reinscritos = ${
+              data[`${entry.name}Reinscritos`] || "N/A"
+            }, Total = ${data[`${entry.name}Total`] || "N/A"}`}
+          </p>
+        ))}
       </div>
     );
   }
@@ -324,24 +287,6 @@ const Dashboard = () => {
     setCalculatedProjections(projections);
   }, []);
 
-  //   const formatData = () => {
-  //     return years.map((year, index) => {
-  //       const dataPoint = { name: year };
-  //       Object.keys(fullData[selectedSection]).forEach((group) => {
-  //         if (index < 5) {
-  //           const yearData = fullData[selectedSection][group][index];
-  //           dataPoint[group] = yearData.nuevos;
-  //           dataPoint[`${group}Reinscritos`] = yearData.reinscritos;
-  //           dataPoint[`${group}Total`] = yearData.total;
-  //         } else {
-  //           dataPoint[group] =
-  //             calculatedProjections[selectedSection]?.[group]?.[index - 5] || 0;
-  //         }
-  //       });
-  //       return dataPoint;
-  //     });
-  //   };
-
   const formatData = () => {
     return years.map((year, index) => {
       const dataPoint = { name: year };
@@ -352,15 +297,8 @@ const Dashboard = () => {
           dataPoint[`${group}Reinscritos`] = yearData.reinscritos;
           dataPoint[`${group}Total`] = yearData.total;
         } else {
-          const projectedData =
-            calculatedProjections[selectedSection]?.[group]?.[index - 5];
-          if (projectedData) {
-            dataPoint[group] = projectedData.nuevos;
-            if (projectedData.reinscritos !== undefined)
-              dataPoint[`${group}Reinscritos`] = projectedData.reinscritos;
-            if (projectedData.total !== undefined)
-              dataPoint[`${group}Total`] = projectedData.total;
-          }
+          dataPoint[group] =
+            calculatedProjections[selectedSection]?.[group]?.[index - 5] || 0;
         }
       });
       return dataPoint;
