@@ -19,6 +19,7 @@ jobs:
           node-version: "18" # Asegúrate de usar la versión de Node.js que requiere tu proyecto
 
       - name: Install dependencies
+        run: npm install recharts
         run: npm install
 
       - name: Build the React app
