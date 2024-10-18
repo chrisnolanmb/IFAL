@@ -17,10 +17,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18" # Asegúrate de usar la versión de Node.js que requiere tu proyecto
-      -name: Install recharts
+      - name: Install recharts
         run: npm install recharts
       - name: Install dependencies
-        
+
         run: npm install
 
       - name: Build the React app
