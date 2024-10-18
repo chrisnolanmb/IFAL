@@ -277,11 +277,11 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const Dashboard = () => {
   const [selectedSection, setSelectedSection] = useState("Secundaria");
-  const [projectedData, setProjectedData] = useState({});
+  const [calculatedProjections, setCalculatedProjections] = useState({});
 
   useEffect(() => {
-    const calculatedProjections = calculateProjections(fullData);
-    setProjectedData(calculatedProjections);
+    const projections = calculateProjections(fullData);
+    setCalculatedProjections(projections);
   }, []);
 
   const formatData = () => {
@@ -295,7 +295,7 @@ const Dashboard = () => {
           dataPoint[`${group}Total`] = yearData.total;
         } else {
           dataPoint[group] =
-            projectedData[selectedSection]?.[group]?.[index - 5] || 0;
+            calculatedProjections[selectedSection]?.[group]?.[index - 5] || 0;
         }
       });
       return dataPoint;
